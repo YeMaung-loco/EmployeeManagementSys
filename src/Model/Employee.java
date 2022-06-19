@@ -2,7 +2,7 @@ package Model;
 
 public class Employee {
 	String name, addr;
-	int salary;
+	int salary, id;
 
 	public Employee() {
 
@@ -16,6 +16,14 @@ public class Employee {
 
 	public String getName() {
 		return name;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public void setName(String name) {
