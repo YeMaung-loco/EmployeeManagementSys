@@ -1,10 +1,9 @@
-import controller.EmployeeController;
+import controller.Main_Controller;
 
 public class EmployeeManagementSys {
 
 	public static void main(String[] args) {
-	
-		EmployeeController employeeController=new EmployeeController();///start
+		Main_Controller mainController = new Main_Controller();/// start
 	}
 
 }

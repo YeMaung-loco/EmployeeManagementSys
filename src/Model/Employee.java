@@ -1,49 +1,60 @@
 package Model;
 
-public class Employee {
-	String name, addr;
-	int salary, id;
+public class Employee extends PersonInfo {
+
+	private String username;
+
+	private String password;
+
+	private String role;
+
+	private boolean active;
 
 	public Employee() {
-
+		super();
 	}
 
-	public Employee(String name, String addr, int salary) {
-		this.name = name;
-		this.addr = addr;
-		this.salary = salary;
+	public Employee(String name, String phone, String email, String address,
+			String username, String password,String role, boolean active) {
+		super(name, phone, email, address);
+		this.username = username;
+		this.password = password;
+		this.role = role;
+		this.active = active;
+		
 	}
 
-	public String getName() {
-		return name;
+	public void setActive(boolean active) {
+		System.out.println("employee.java"+active);
+		this.active = active;
+	}
+	
+	public boolean getActive() {
+		return active;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public String getUsername() {
+		return username;
 	}
 
-	public int getId() {
-		return id;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public String getPassword() {
+		return password;
 	}
 
-	public String getAddr() {
-		return addr;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public void setAddr(String addr) {
-		this.addr = addr;
+	public String getRole() {
+		return role;
 	}
 
-	public int getSalary() {
-		return salary;
-	}
-
-	public void setSalary(int salary) {
-		this.salary = salary;
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

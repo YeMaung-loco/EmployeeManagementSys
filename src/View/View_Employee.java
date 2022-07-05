@@ -2,10 +2,9 @@ package View;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.util.Vector;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,10 +12,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
-import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 public class View_Employee {
 
@@ -25,12 +24,14 @@ public class View_Employee {
 	DefaultTableModel dtm;
 	JScrollPane scrollPane;
 	JPanel inputPanel;
-	JTextField txtName, txtAddr, txtSalary;
-	JLabel lblName, lblAddr, lblSalary;
-	JButton btnSave, btnClear, btnShow, btnClose;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	JTextField txtName, txtPhone, txtEmail, txtSearch;
+	JLabel lblName, lblPhone, lblEmail;
+	JButton btnSave, btnClear, btnShow, btnClose, btnUpdate, btnDelete, btnEdit, btnSearch;
+	JCheckBox chckActiveBox;
+	private JTextField txtAddress;
+	private JTextField txtUserName;
+	private JTextField txtPassword;
+	private JTextField txtRole;
 
 	public View_Employee() {
 		initComponents();
@@ -41,26 +42,55 @@ public class View_Employee {
 	private void setTableDesign() {
 		dtm.addColumn("ID");
 		dtm.addColumn("Name");
+		dtm.addColumn("Phone");
+		dtm.addColumn("Email");
 		dtm.addColumn("Address");
-		dtm.addColumn("Salary");
+		dtm.addColumn("UserName");
+		dtm.addColumn("Password");
+		dtm.addColumn("Role");
+		dtm.addColumn("Active");
 		table.setModel(dtm);
+		
+		setColumnWidth(0, 10);
+		setColumnWidth(1, 40);
+		
+		
 	}
+	
+	public void setColumnWidth(int index, int width) {
+		DefaultTableColumnModel tableColumnModel=(DefaultTableColumnModel) table.getColumnModel();
+		TableColumn tc=tableColumnModel.getColumn(index);
+		tc.setPreferredWidth(width);
+		
+	}
+
 
 	public void initComponents() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(new Color(255, 255, 153));
 		txtName = new JTextField();
-		txtAddr = new JTextField();
-		txtSalary = new JTextField();
+		txtPhone = new JTextField();
+		txtEmail = new JTextField();
+		txtSearch = new JTextField();
+
 		btnSave = new JButton();
 		btnClear = new JButton();
-		btnShow= new JButton();
-		btnClose= new JButton();
+		btnShow = new JButton();
+		btnClose = new JButton();
+		btnUpdate = new JButton();
+		btnDelete = new JButton();
+		btnEdit = new JButton();
+		btnSearch = new JButton();
 
 		lblName = new JLabel();
-		lblAddr = new JLabel();
-		lblSalary = new JLabel();
+		lblPhone = new JLabel();
+		lblEmail = new JLabel();
+
+		chckActiveBox = new JCheckBox();
+		chckActiveBox.setBackground(new Color(255, 255, 51));
 
 		inputPanel = new JPanel();
+		inputPanel.setBackground(new Color(255, 255, 51));
 		inputPanel.setForeground(Color.BLACK);
 
 		table = new JTable();
@@ -77,12 +107,13 @@ public class View_Employee {
 		frame.setResizable(false);
 		frame.setVisible(true);
 
-		scrollPane.setSize(800, 500);
-		scrollPane.setLocation(420, 26);
+		scrollPane.setSize(800, 452);
+		scrollPane.setLocation(420, 74);
+		scrollPane.setViewportView(table);
 
-		Border borderTitle = BorderFactory.createTitledBorder("Employee Form");
-		inputPanel.setBorder(borderTitle);
-		inputPanel.setBounds(20,30,360,508);
+		//Border borderTitle = BorderFactory.createTitledBorder("Employee Form");
+		//inputPanel.setBorder(borderTitle);
+		inputPanel.setBounds(20, 30, 360, 603);
 		inputPanel.setLayout(null);
 
 		Color color = UIManager.getColor("Table.gridColor");
@@ -98,29 +129,38 @@ public class View_Employee {
 		txtName.setBounds(130, 30, 210, 25);
 		txtName.setColumns(10);
 
-		lblAddr.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblAddr.setBounds(20, 70, 74, 25);
-		lblAddr.setText("Address");
+		lblPhone.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblPhone.setBounds(20, 70, 74, 25);
+		lblPhone.setText("Phone");
 
-		txtAddr.setFont(new Font("Tahoma", Font.BOLD, 14));
-		txtAddr.setBounds(130, 70, 210, 25);
-		txtAddr.setColumns(10);
+		txtPhone.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtPhone.setBounds(130, 70, 210, 25);
+		txtPhone.setColumns(10);
 
-		lblSalary.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblSalary.setBounds(20, 110, 58, 25);
-		lblSalary.setText("Salary");
+		lblEmail.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblEmail.setBounds(20, 110, 58, 25);
+		lblEmail.setText("Email");
 
-		txtSalary.setFont(new Font("Tahoma", Font.BOLD, 14));
-		txtSalary.setBounds(130, 110, 210, 25);
-		txtSalary.setColumns(10);
+		txtEmail.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtEmail.setBounds(130, 110, 210, 25);
+		txtEmail.setColumns(10);
+
+		txtSearch.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtSearch.setColumns(10);
+		txtSearch.setBounds(914, 22, 210, 25);
 
 		btnSave.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnSave.setText("Save");
-		btnSave.setBounds(20, 461, 150, 27);
+		btnSave.setBounds(20, 545, 150, 27);
+
+		btnUpdate.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnUpdate.setText("Update");
+		btnUpdate.setBounds(20, 545, 150, 27);
+		// btnUpdate.setVisible(false);
 
 		btnClear.setText("Clear");
 		btnClear.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnClear.setBounds(190, 461, 150, 27);
+		btnClear.setBounds(190, 545, 150, 27);
 
 		btnShow.setText("Show");
 		btnShow.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -130,84 +170,97 @@ public class View_Employee {
 		btnClose.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnClose.setBounds(1050, 576, 170, 27);
 
+		btnEdit.setText("Edit");
+		btnEdit.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnEdit.setBounds(633, 576, 170, 27);
+
+		btnDelete.setText("Delete");
+		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnDelete.setBounds(846, 576, 170, 27);
+
+		btnSearch.setText("Search");
+		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnSearch.setBounds(1123, 21, 97, 27);
+
+		chckActiveBox.setText("Active");
+		chckActiveBox.setFont(new Font("Tahoma", Font.BOLD, 18));
+		chckActiveBox.setBounds(130, 303, 93, 21);
+
 	}
 
 	public void addComponents() {
-		/*
-		 * frame.getContentPane().add(txtName); frame.getContentPane().add(txtAddr);
-		 * frame.getContentPane().add(txtSalary); frame.getContentPane().add(lblName);
-		 * frame.getContentPane().add(lblAddr); frame.getContentPane().add(lblSalary);
-		 * 
-		 * frame.getContentPane().add(btnClear); frame.getContentPane().add(btnShow);
-		 * frame.getContentPane().add(btnSave); frame.getContentPane().add(btnClose);
-		 * 
-		 * frame.getContentPane().add(scrollPane);
-		 */
-		inputPanel.setLayout(null);
 
 		inputPanel.add(txtName);
-		inputPanel.add(txtAddr);
-		inputPanel.add(txtSalary);
+		inputPanel.add(txtPhone);
+		inputPanel.add(txtEmail);
 		inputPanel.add(lblName);
-		inputPanel.add(lblAddr);
-		inputPanel.add(lblSalary);
-
+		inputPanel.add(lblPhone);
+		inputPanel.add(lblEmail);
 		inputPanel.add(btnClear);
 		inputPanel.add(btnSave);
+		inputPanel.add(btnUpdate);
 
 		frame.getContentPane().add(inputPanel);
-		
-		JLabel lblName_1 = new JLabel();
-		lblName_1.setText("Name");
-		lblName_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblName_1.setBounds(20, 150, 54, 25);
-		inputPanel.add(lblName_1);
-		
-		textField = new JTextField();
-		textField.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField.setColumns(10);
-		textField.setBounds(130, 150, 210, 25);
-		inputPanel.add(textField);
-		
-		JLabel lblAddr_1 = new JLabel();
-		lblAddr_1.setText("Address");
-		lblAddr_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblAddr_1.setBounds(20, 190, 74, 25);
-		inputPanel.add(lblAddr_1);
-		
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField_1.setColumns(10);
-		textField_1.setBounds(130, 190, 210, 25);
-		inputPanel.add(textField_1);
-		
-		JLabel lblSalary_1 = new JLabel();
-		lblSalary_1.setText("Salary");
-		lblSalary_1.setFont(new Font("Tahoma", Font.BOLD, 18));
-		lblSalary_1.setBounds(20, 230, 58, 25);
-		inputPanel.add(lblSalary_1);
-		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.BOLD, 14));
-		textField_2.setColumns(10);
-		textField_2.setBounds(130, 230, 210, 25);
-		inputPanel.add(textField_2);
 		frame.getContentPane().add(scrollPane);
-		
 		frame.getContentPane().add(btnClose);
 		frame.getContentPane().add(btnShow);
-		
-		JButton btnImport = new JButton();
-		btnImport.setText("Import");
-		btnImport.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnImport.setBounds(633, 576, 170, 27);
-		frame.getContentPane().add(btnImport);
-		
-		JButton btnExport = new JButton();
-		btnExport.setText("Export");
-		btnExport.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnExport.setBounds(846, 576, 170, 27);
-		frame.getContentPane().add(btnExport);
+
+		frame.getContentPane().add(btnEdit);
+		frame.getContentPane().add(btnDelete);
+
+		JLabel lblAddr = new JLabel();
+		lblAddr.setText("Address");
+		lblAddr.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblAddr.setBounds(20, 150, 74, 25);
+		inputPanel.add(lblAddr);
+
+		txtAddress = new JTextField();
+		txtAddress.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtAddress.setColumns(10);
+		txtAddress.setBounds(130, 150, 210, 25);
+		inputPanel.add(txtAddress);
+
+		JLabel lblUserName = new JLabel();
+		lblUserName.setText("User Name");
+		lblUserName.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblUserName.setBounds(20, 190, 120, 25);
+		inputPanel.add(lblUserName);
+
+		txtUserName = new JTextField();
+		txtUserName.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtUserName.setColumns(10);
+		txtUserName.setBounds(130, 190, 210, 25);
+		inputPanel.add(txtUserName);
+
+		JLabel lblPassword = new JLabel();
+		lblPassword.setText("Password");
+		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblPassword.setBounds(20, 230, 89, 25);
+		inputPanel.add(lblPassword);
+
+		txtPassword = new JTextField();
+		txtPassword.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtPassword.setColumns(10);
+		txtPassword.setBounds(130, 230, 210, 25);
+		inputPanel.add(txtPassword);
+
+		JLabel lblRole = new JLabel();
+		lblRole.setText("Role");
+		lblRole.setFont(new Font("Tahoma", Font.BOLD, 18));
+		lblRole.setBounds(20, 265, 89, 25);
+		inputPanel.add(lblRole);
+
+		txtRole = new JTextField();
+		txtRole.setFont(new Font("Tahoma", Font.BOLD, 14));
+		txtRole.setColumns(10);
+		txtRole.setBounds(130, 265, 210, 25);
+		inputPanel.add(txtRole);
+
+		inputPanel.add(chckActiveBox);
+
+		frame.getContentPane().add(txtSearch);
+
+		frame.getContentPane().add(btnSearch);
 
 		setTableDesign();
 
@@ -225,12 +278,32 @@ public class View_Employee {
 		return txtName;
 	}
 
-	public JTextField getTxtAddr() {
-		return txtAddr;
+	public JTextField getTxtPhone() {
+		return txtPhone;
 	}
 
-	public JTextField getTxtSalary() {
-		return txtSalary;
+	public JTextField getTxtEmail() {
+		return txtEmail;
+	}
+
+	public JTextField getTxtAddress() {
+		return txtAddress;
+	}
+
+	public JTextField getTxtUserName() {
+		return txtUserName;
+	}
+
+	public JTextField getTxtPassword() {
+		return txtPassword;
+	}
+
+	public JTextField getTxtRole() {
+		return txtRole;
+	}
+
+	public JCheckBox getCheckBox() {
+		return chckActiveBox;
 	}
 
 	public JButton getbtnSave() {
@@ -245,19 +318,20 @@ public class View_Employee {
 		return btnShow;
 	}
 
+	public JButton getbtnUpdate() {
+		return btnUpdate;
+	}
+
+	public JButton getbtnEdit() {
+		return btnEdit;
+	}
+
+	public JButton getbtnDelete() {
+		return btnDelete;
+	}
+
 	public JButton getbtnClose() {
 		return btnClose;
 	}
 
-	public JLabel getlblName() {
-		return lblName;
-	}
-
-	public JLabel getlblAddr() {
-		return lblAddr;
-	}
-
-	public JLabel getlblSalary() {
-		return lblSalary;
-	}
 }
